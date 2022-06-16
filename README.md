@@ -1,4 +1,4 @@
-# discord.jsx
+# @chooks22/discord.jsx
 
 > ### WARNING!
 >
@@ -19,13 +19,13 @@ to easily interact with [Discord.js](https://discordjs.guide).
 newer is required.**
 
 ```sh
-npm install discord.jsx discord.js
+npm install @chooks22/discord.jsx discord.js
 npm install -D typescript
 
-yarn add discord.jsx discord.js
+yarn add @chooks22/discord.jsx discord.js
 yarn add -D typescript
 
-pnpm add discord.jsx discord.js
+pnpm add @chooks22/discord.jsx discord.js
 pnpm add -D typescript
 ```
 
@@ -40,7 +40,7 @@ To be able to emit proper JavaScript, the following tsconfig options are require
     "module": "ESNext",
     "moduleResolution": "NodeNext",
     "jsx": "react-jsx",
-    "jsxImportSource": "discord.jsx"
+    "jsxImportSource": "@chooks22/discord.jsx"
   }
 }
 ```
@@ -51,7 +51,7 @@ Define a slash command:
 
 ```jsx
 // commands.tsx
-import { CommandList, SlashCommand } from 'discord.jsx'
+import { CommandList, SlashCommand } from '@chooks22/discord.jsx'
 
 export const commands = <CommandList>
   <SlashCommand
@@ -67,7 +67,7 @@ export const commands = <CommandList>
 Register a slash command against the Discord API:
 
 ```jsx
-import { createApp } from 'discord.jsx'
+import { createApp } from '@chooks22/discord.jsx'
 import { commands } from './commands.js'
 
 const app = createApp('token')
@@ -81,7 +81,7 @@ Afterwards we can create a quite simple example bot:
 
 ```jsx
 import { Intents } from 'discord.js'
-import { createApp, Client } from 'discord.jsx'
+import { createApp, Client } from '@chooks22/discord.jsx'
 import { commands } from './commands.js'
 
 const app = createApp('token')

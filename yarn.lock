@@ -5,6 +5,23 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@chooks22/discord.jsx@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@chooks22/discord.jsx@workspace:."
+  dependencies:
+    "@chookslint/eslint-config-typescript": ^2.2.1
+    "@typescript-eslint/eslint-plugin": ^5.28.0
+    "@typescript-eslint/parser": ^5.28.0
+    discord-api-types: ^0.34.0
+    discord.js: ^13.8.0
+    eslint: ^8.17.0
+    node-fetch: cjs
+    typescript: ^4.7.3
+  peerDependencies:
+    discord.js: ^13.8.0
+  languageName: unknown
+  linkType: soft
+
 "@chookslint/eslint-config-typescript@npm:^2.2.1":
   version: 2.2.1
   resolution: "@chookslint/eslint-config-typescript@npm:2.2.1"
@@ -500,23 +517,6 @@ __metadata:
   checksum: 9fb026f5d2bcc5339044b3f2df7efca815656064d593582ea5fb60beabdc0ae0381010949b94940496d91dd8c2aa2dc55bc8db48300da5b8d00eadcc04665dc2
   languageName: node
   linkType: hard
-
-"discord.jsx@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "discord.jsx@workspace:."
-  dependencies:
-    "@chookslint/eslint-config-typescript": ^2.2.1
-    "@typescript-eslint/eslint-plugin": ^5.28.0
-    "@typescript-eslint/parser": ^5.28.0
-    discord-api-types: ^0.34.0
-    discord.js: ^13.8.0
-    eslint: ^8.17.0
-    node-fetch: cjs
-    typescript: ^4.7.3
-  peerDependencies:
-    discord.js: ^13.8.0
-  languageName: unknown
-  linkType: soft
 
 "doctrine@npm:^3.0.0":
   version: 3.0.0
