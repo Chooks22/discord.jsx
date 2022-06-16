@@ -1,0 +1,9 @@
+---
+root: true
+extends:
+  - "@chookslint/typescript/strict"
+  - "@chookslint/typescript/types"
+parserOptions:
+  project: ./tsconfig.json
+rules:
+  "@typescript-eslint/no-empty-interface": off

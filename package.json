@@ -1,0 +1,47 @@
+{
+  "name": "discord.jsx",
+  "version": "0.1.0",
+  "description": "Unofficial Library for using Discord.JS with JSX Syntax",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist/**/*.{js,d.ts}",
+    "jsx.d.ts"
+  ],
+  "packageManager": "yarn@3.2.1",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --incremental -w",
+    "lint": "eslint src --fix"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./jsx-runtime": "./dist/jsx-runtime.js"
+  },
+  "devDependencies": {
+    "@chookslint/eslint-config-typescript": "^2.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "discord-api-types": "^0.34.0",
+    "discord.js": "^13.8.0",
+    "eslint": "^8.17.0",
+    "node-fetch": "cjs",
+    "typescript": "^4.7.3"
+  },
+  "peerDependencies": {
+    "discord.js": "^13.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Choooks22/discord.jsx.git"
+  },
+  "keywords": [
+    "discord",
+    "discord.js",
+    "typescript",
+    "bot",
+    "jsx",
+    "react",
+    "discordapp"
+  ]
+}

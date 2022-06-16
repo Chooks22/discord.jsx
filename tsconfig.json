@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "strict": true,
+    "declaration": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "discord.jsx",
+    "lib": [
+      "ESNext"
+    ],
+    "paths": {
+      "discord.jsx": [
+        "./src/index.ts"
+      ],
+      "discord.jsx/jsx-runtime": [
+        "./src/jsx-runtime.ts"
+      ]
+    }
+  },
+  "include": [
+    "src",
+    "jsx.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
