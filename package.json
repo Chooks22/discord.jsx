@@ -1,6 +1,6 @@
 {
   "name": "@chooks22/discord.jsx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Unofficial Library for using Discord.JS with JSX Syntax",
   "license": "MIT",
   "type": "module",
