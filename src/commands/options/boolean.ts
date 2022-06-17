@@ -5,7 +5,7 @@ import { validateBaseOption } from './_utils.js'
 export interface BooleanOptionProps extends BaseOption {
 }
 
-interface BooleanOption extends BooleanOptionProps {
+export interface BooleanOption extends BooleanOptionProps {
   type: OptionType.Boolean
 }
 

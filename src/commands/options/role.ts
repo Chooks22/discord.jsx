@@ -5,7 +5,7 @@ import { validateBaseOption } from './_utils.js'
 export interface RoleOptionProps extends BaseOption {
 }
 
-interface RoleOption extends RoleOptionProps {
+export interface RoleOption extends RoleOptionProps {
   type: OptionType.Role
 }
 

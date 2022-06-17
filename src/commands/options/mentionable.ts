@@ -5,7 +5,7 @@ import { validateBaseOption } from './_utils.js'
 export interface MentionableOptionProps extends BaseOption {
 }
 
-interface MentionableOption extends MentionableOptionProps {
+export interface MentionableOption extends MentionableOptionProps {
   type: OptionType.Mentionable
 }
 

@@ -5,7 +5,7 @@ import { validateAutocomplete, validateBaseOption } from './_utils.js'
 export interface StringOptionProps extends BaseOption, WithAutocomplete {
 }
 
-interface StringOption extends StringOptionProps {
+export interface StringOption extends StringOptionProps {
   type: OptionType.String
 }
 

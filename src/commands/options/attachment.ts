@@ -5,7 +5,7 @@ import { validateBaseOption } from './_utils.js'
 export interface AttachmentOptionProps extends BaseOption {
 }
 
-interface AttachmentOption extends AttachmentOptionProps {
+export interface AttachmentOption extends AttachmentOptionProps {
   type: OptionType.Attachment
 }
 

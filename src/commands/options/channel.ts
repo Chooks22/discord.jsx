@@ -7,7 +7,7 @@ export interface ChannelOptionProps extends BaseOption {
   channelTypes?: number[]
 }
 
-interface ChannelOption extends ChannelOptionProps {
+export interface ChannelOption extends ChannelOptionProps {
   type: OptionType.Channel
 }
 

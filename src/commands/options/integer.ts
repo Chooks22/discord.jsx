@@ -8,7 +8,7 @@ export interface IntegerOptionProps extends BaseOption, WithAutocomplete {
   maxValue?: number
 }
 
-interface IntegerOption extends IntegerOptionProps {
+export interface IntegerOption extends IntegerOptionProps {
   type: OptionType.Integer
 }
 

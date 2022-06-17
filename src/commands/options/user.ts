@@ -5,7 +5,7 @@ import { validateBaseOption } from './_utils.js'
 export interface UserOptionProps extends BaseOption {
 }
 
-interface UserOption extends UserOptionProps {
+export interface UserOption extends UserOptionProps {
   type: OptionType.User
 }
 
