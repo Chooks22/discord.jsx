@@ -1,11 +1,12 @@
 // eslint-disable-next-line
 /// <reference path="../jsx.d.ts" />
-
 import type { RESTPostAPIChatInputApplicationCommandsJSONBody as ChatInput } from 'discord-api-types/v10.js'
 import type { Client } from 'discord.js'
 import fetch from 'node-fetch'
+
 export * from './client.js'
 export * from './commands/index.js'
+export * from './components/index.js'
 
 function getAppIdFromToken(token: string): string {
   const b64id = token.slice(0, token.indexOf('.'))
