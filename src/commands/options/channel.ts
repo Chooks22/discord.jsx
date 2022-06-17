@@ -1,4 +1,4 @@
-import { OptionType } from '../../utils.js'
+import { arrayify, OptionType } from '../../utils.js'
 import { invalid } from '../_utils.js'
 import type { BaseOption, OptionContainer } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
@@ -13,6 +13,7 @@ interface ChannelOption extends ChannelOptionProps {
 
 function validate(option: ChannelOption) {
   validateBaseOption('channel option', option)
+
   if (option.channelTypes !== undefined) {
     if (!Array.isArray(option.channelTypes)) {
       invalid(`channel option channel types must be an array! received: ${typeof option.channelTypes}`)
@@ -23,13 +24,14 @@ function validate(option: ChannelOption) {
       invalid(`channel option channel types got invalid type! received: ${invalidType}`)
     }
   }
+
   return option
 }
 
 export function ChannelOption(option: ChannelOptionProps): OptionContainer<ChannelOption> {
   const _option = { ...option, type: OptionType.Channel as const }
   if (option.channelTypes !== undefined) {
-    _option.channelTypes = [option.channelTypes].flat()
+    _option.channelTypes = arrayify(option.channelTypes)
   }
   const data = validate(_option)
   return {

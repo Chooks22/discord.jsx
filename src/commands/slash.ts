@@ -1,11 +1,10 @@
 import type { CommandInteraction } from 'discord.js'
-import type { InteractionHandler } from '../utils.js'
 import { arrayify, CommandType, permissionify } from '../utils.js'
 import type { OptionContainer } from './options/_utils.js'
-import type { CommandContainer, CommandWithDescription } from './_utils.js'
+import type { BaseCommand, CommandContainer, WithDescription, WithExecute } from './_utils.js'
+import { validateBaseCommand, validateDescription, validateExecute } from './_utils.js'
 
-export interface SlashCommandProps extends CommandWithDescription {
-  onExecute: InteractionHandler<CommandInteraction>
+export interface SlashCommandProps extends BaseCommand, WithDescription, WithExecute<CommandInteraction> {
   options?: JSX.Element
 }
 
@@ -13,8 +12,11 @@ export interface SlashCommand extends SlashCommandProps {
   type: CommandType.ChatInput
 }
 
-// @todo: validation
 function validate(command: SlashCommand) {
+  const prefix = 'slash command'
+  validateBaseCommand(prefix, command)
+  validateDescription(prefix, command)
+  validateExecute(prefix, command)
   return command
 }
 

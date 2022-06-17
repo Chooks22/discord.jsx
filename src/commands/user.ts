@@ -1,18 +1,19 @@
 import type { UserContextMenuInteraction } from 'discord.js'
-import type { InteractionHandler } from '../utils.js'
 import { CommandType, permissionify } from '../utils.js'
-import type { BaseCommand, CommandContainer } from './_utils.js'
+import type { BaseCommand, CommandContainer, WithExecute } from './_utils.js'
+import { validateBaseCommand, validateExecute } from './_utils.js'
 
-export interface UserCommandProps extends BaseCommand {
-  onExecute: InteractionHandler<UserContextMenuInteraction>
+export interface UserCommandProps extends BaseCommand, WithExecute<UserContextMenuInteraction> {
 }
 
 interface UserCommand extends UserCommandProps {
   type: CommandType.User
 }
 
-// @todo: validation
 function validate(command: UserCommand) {
+  const prefix = 'user command'
+  validateBaseCommand(prefix, command)
+  validateExecute(prefix, command)
   return command
 }
 

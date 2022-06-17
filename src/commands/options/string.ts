@@ -1,8 +1,8 @@
 import { OptionType } from '../../utils.js'
-import type { OptionContainer, OptionWithAutocomplete } from './_utils.js'
-import { validateOptionWithAutocomplete } from './_utils.js'
+import type { BaseOption, OptionContainer, WithAutocomplete } from './_utils.js'
+import { validateAutocomplete, validateBaseOption } from './_utils.js'
 
-export interface StringOptionProps extends OptionWithAutocomplete {
+export interface StringOptionProps extends BaseOption, WithAutocomplete {
 }
 
 interface StringOption extends StringOptionProps {
@@ -10,7 +10,9 @@ interface StringOption extends StringOptionProps {
 }
 
 function validate(option: StringOption) {
-  validateOptionWithAutocomplete('string option', option)
+  const prefix = 'string option'
+  validateBaseOption(prefix, option)
+  validateAutocomplete(prefix, option)
   return option
 }
 

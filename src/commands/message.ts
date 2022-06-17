@@ -1,18 +1,19 @@
 import type { MessageContextMenuInteraction } from 'discord.js'
-import type { InteractionHandler } from '../utils.js'
 import { CommandType, permissionify } from '../utils.js'
-import type { BaseCommand, CommandContainer } from './_utils.js'
+import type { BaseCommand, CommandContainer, WithExecute } from './_utils.js'
+import { validateBaseCommand, validateExecute } from './_utils.js'
 
-export interface MessageCommandProps extends BaseCommand {
-  onExecute: InteractionHandler<MessageContextMenuInteraction>
+export interface MessageCommandProps extends BaseCommand, WithExecute<MessageContextMenuInteraction> {
 }
 
 interface MessageCommand extends MessageCommandProps {
   type: CommandType.Message
 }
 
-// @todo: validate
 function validate(command: MessageCommand) {
+  const prefix = 'message command'
+  validateBaseCommand(prefix, command)
+  validateExecute(prefix, command)
   return command
 }
 

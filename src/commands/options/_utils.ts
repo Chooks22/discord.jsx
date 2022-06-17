@@ -1,17 +1,18 @@
 import type {
-  APIApplicationCommandOptionChoice as Choice,
   APIApplicationCommandBasicOption as Option,
-  LocalizationMap,
+  APIApplicationCommandOptionChoice as Choice,
 } from 'discord-api-types/v10'
 import type { AutocompleteInteraction } from 'discord.js'
 import type { InteractionHandler } from '../../utils.js'
-import { invalid, validateString } from '../_utils.js'
+import type { WithDescription, WithName } from '../_utils.js'
+import { invalid, validateDescription, validateName } from '../_utils.js'
 
-export interface BaseOption {
-  name: string
-  nameLocalizations?: LocalizationMap
-  description: string
-  descriptionLocalizations?: LocalizationMap
+export interface WithAutocomplete {
+  autocomplete?: InteractionHandler<AutocompleteInteraction>
+  choices?: Choice[]
+}
+
+export interface BaseOption extends WithName, WithDescription {
   required?: boolean
 }
 
@@ -24,43 +25,19 @@ export interface OptionContainer<T extends BaseOption = BaseOption> {
   toJSON: () => Option
 }
 
-export interface OptionWithAutocomplete extends BaseOption {
-  autocomplete?: InteractionHandler<AutocompleteInteraction>
-  choices?: Choice[]
-}
-
-export function validateLocales(prefix: string, locales: LocalizationMap, min: number, max: number): void | never {
-  for (const key in locales) {
-    if (Object.hasOwn(locales, key)) {
-      const localization = locales[key as keyof LocalizationMap]
-      if (localization !== null) {
-        validateString(`${prefix} ${key}`, localization!, min, max)
-      }
-    }
-  }
-}
-
 export function validateBaseOption(prefix: string, option: BaseOption): void | never {
-  validateString(`${prefix} name`, option.name, 1, 32)
-  validateString(`${prefix} description`, option.description, 1, 100)
+  validateName(prefix, option)
+  validateDescription(prefix, option)
 
-  if ('required' in option) {
-    const reqType = typeof option
+  if (option.required !== undefined) {
+    const reqType = typeof option.required
     if (reqType !== 'boolean') {
       invalid(`${prefix} required is not a boolean! received: ${reqType}`)
     }
   }
-
-  if (option.nameLocalizations) {
-    validateLocales(`${prefix} name locales`, option.nameLocalizations, 1, 32)
-  }
-
-  if (option.descriptionLocalizations) {
-    validateLocales(`${prefix} description locales`, option.descriptionLocalizations, 1, 100)
-  }
 }
 
-export function validateOptionWithAutocomplete(prefix: string, props: OptionWithAutocomplete): void | never {
+export function validateAutocomplete(prefix: string, props: WithAutocomplete): void | never {
   if (props.autocomplete === undefined && props.choices === undefined) {
     return
   }

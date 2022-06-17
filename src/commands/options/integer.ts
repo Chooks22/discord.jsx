@@ -1,9 +1,9 @@
-import { OptionType } from '../../utils.js'
+import { arrayify, OptionType } from '../../utils.js'
 import { validateNumber } from '../_utils.js'
-import type { OptionContainer, OptionWithAutocomplete } from './_utils.js'
-import { validateOptionWithAutocomplete } from './_utils.js'
+import type { BaseOption, OptionContainer, WithAutocomplete } from './_utils.js'
+import { validateAutocomplete, validateBaseOption } from './_utils.js'
 
-export interface IntegerOptionProps extends OptionWithAutocomplete {
+export interface IntegerOptionProps extends BaseOption, WithAutocomplete {
   minValue?: number
   maxValue?: number
 }
@@ -13,20 +13,24 @@ interface IntegerOption extends IntegerOptionProps {
 }
 
 function validate(option: IntegerOption) {
-  validateOptionWithAutocomplete('integer option', option)
+  const prefix = 'integer option'
+  validateBaseOption(prefix, option)
+  validateAutocomplete(prefix, option)
+
   if (option.minValue !== undefined) {
-    validateNumber('integer option min value', option.minValue)
+    validateNumber(`${prefix} min value`, option.minValue)
   }
   if (option.maxValue !== undefined) {
-    validateNumber('integer option max value', option.maxValue)
+    validateNumber(`${prefix} max value`, option.maxValue)
   }
+
   return option
 }
 
 export function IntegerOption(option: IntegerOptionProps): OptionContainer<IntegerOption> {
   const _option = { ...option, type: OptionType.Integer as const }
   if (option.choices !== undefined) {
-    _option.choices = [option.choices].flat()
+    _option.choices = arrayify(option.choices)
   }
   const data = validate(_option)
   return {
