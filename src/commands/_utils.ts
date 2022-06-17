@@ -74,7 +74,7 @@ function validateDiscordName(prefix: string, name: string) {
   }
 }
 
-export function validateName(prefix: string, obj: WithName) {
+export function validateName(prefix: string, obj: WithName): void | never {
   validateDiscordName(prefix, obj.name)
 
   const locales = obj.nameLocalizations
