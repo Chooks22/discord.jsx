@@ -6,6 +6,8 @@ import type { MentionableOption } from './mentionable.js'
 import type { NumberOption } from './number.js'
 import type { RoleOption } from './role.js'
 import type { StringOption } from './string.js'
+import type { SubcommandGroup } from './subcommand-group.js'
+import type { Subcommand } from './subcommand.js'
 import type { UserOption } from './user.js'
 
 export type BasicOption =
@@ -18,3 +20,7 @@ export type BasicOption =
 | RoleOption
 | StringOption
 | UserOption
+
+export type SubcommandOption =
+| Subcommand
+| SubcommandGroup

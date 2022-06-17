@@ -6,7 +6,7 @@ import { validateBaseCommand, validateExecute } from './_utils.js'
 export interface MessageCommandProps extends BaseCommand, WithExecute<MessageContextMenuInteraction> {
 }
 
-interface MessageCommand extends MessageCommandProps {
+export interface MessageCommand extends MessageCommandProps {
   type: CommandType.Message
 }
 

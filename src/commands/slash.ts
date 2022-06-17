@@ -1,5 +1,6 @@
 import type { CommandInteraction } from 'discord.js'
 import { arrayify, CommandType, permissionify } from '../utils.js'
+import type { BasicOption } from './options/types.js'
 import type { OptionContainer } from './options/_utils.js'
 import type { BaseCommand, CommandContainer, WithDescription, WithExecute } from './_utils.js'
 import { validateBaseCommand, validateDescription, validateExecute } from './_utils.js'
@@ -30,7 +31,7 @@ export function SlashCommand(command: SlashCommandProps): CommandContainer<Slash
       name_localizations: data.nameLocalizations,
       description: data.description,
       description_localizations: data.descriptionLocalizations,
-      options: arrayify(data.options as OptionContainer).map(opt => opt.toJSON()),
+      options: arrayify(data.options as OptionContainer<BasicOption>).map(opt => opt.toJSON()),
       default_member_permissions: permissionify(data.defaultMemberPermissions),
       dm_permission: data.dmPermission,
     }),

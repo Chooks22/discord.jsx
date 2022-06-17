@@ -6,7 +6,7 @@ import { validateBaseCommand, validateExecute } from './_utils.js'
 export interface UserCommandProps extends BaseCommand, WithExecute<UserContextMenuInteraction> {
 }
 
-interface UserCommand extends UserCommandProps {
+export interface UserCommand extends UserCommandProps {
   type: CommandType.User
 }
 

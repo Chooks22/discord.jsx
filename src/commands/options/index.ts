@@ -1,4 +1,6 @@
 export * from './types.js'
+export * from './subcommand.js'
+export * from './subcommand-group.js'
 export * from './attachment.js'
 export * from './boolean.js'
 export * from './channel.js'

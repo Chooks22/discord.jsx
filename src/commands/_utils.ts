@@ -26,9 +26,15 @@ export interface BaseCommandWithType extends BaseCommand {
   type: CommandType
 }
 
-export interface CommandContainer<T extends BaseCommandWithType> {
+export interface Container<T, U> {
   data: T
-  toJSON: () => ChatInput
+  toJSON: () => U
+}
+
+export type CommandContainer<T extends BaseCommandWithType> = Container<T, ChatInput>
+
+export interface WithOptions<T> {
+  options: T[]
 }
 
 export function invalid(message: string): never {
@@ -142,5 +148,15 @@ export function validateExecute(prefix: string, obj: WithExecute<never>): void |
   const execType = typeof obj.onExecute
   if (execType !== 'function') {
     invalid(`${prefix} onExecute is not a function! received: ${execType}`)
+  }
+}
+
+export function validateOptions(prefix: string, obj: WithOptions<unknown>): void | never {
+  const optSize = obj.options.length
+  if (optSize === 0) {
+    invalid(`${prefix} options is empty!`)
+  }
+  if (optSize > 25) {
+    invalid(`${prefix} options has too many options! received: ${optSize}`)
   }
 }

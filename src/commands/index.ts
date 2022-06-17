@@ -1,9 +1,10 @@
-import type { RESTPostAPIApplicationCommandsJSONBody as ChatInput } from 'discord-api-types/v10'
 import type { Client, Interaction } from 'discord.js'
 import type { InteractionHandler } from '../utils.js'
 import { arrayify, CommandType } from '../utils.js'
-import type { BaseCommandWithType } from './_utils.js'
+import type { Command } from './types.js'
+import type { CommandContainer } from './_utils.js'
 
+export * from './types.js'
 export * from './message.js'
 export * from './options/index.js'
 export * from './slash-sub.js'
@@ -28,10 +29,29 @@ const typeToNamespace = {
 
 class CommandStore {
   private store = new Map<string, InteractionHandler>()
-  public set(command: BaseCommandWithType): this {
+  public set(command: Command): this {
+    const ns = typeToNamespace[command.type]
+
     if ('onExecute' in command) {
-      const key = createKey(typeToNamespace[command.type], command.name)
-      this.store.set(key, (command as unknown as { onExecute: InteractionHandler }).onExecute)
+      const key = createKey(ns, command.name)
+      this.store.set(key, command.onExecute as InteractionHandler)
+      return this
+    }
+
+    if (Array.isArray(command.options)) {
+      for (const option of command.options) {
+        if ('onExecute' in option.data) {
+          const subcommand = option.data
+          const key = createKey(ns, command.name, subcommand.name)
+          this.store.set(key, subcommand.onExecute as InteractionHandler)
+        } else {
+          const group = option.data
+          for (const { data: subcommand } of group.options) {
+            const key = createKey(ns, command.name, group.name, subcommand.name)
+            this.store.set(key, subcommand.onExecute as InteractionHandler)
+          }
+        }
+      }
     }
 
     return this
@@ -77,10 +97,7 @@ export interface CommandListProps {
 }
 
 interface CommandList {
-  children: {
-    data: BaseCommandWithType
-    toJSON: () => ChatInput
-  }
+  children: CommandContainer<Command>
 }
 
 // @ts-ignore users see jsx
