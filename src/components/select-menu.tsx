@@ -1,8 +1,8 @@
 import type { EmojiIdentifierResolvable, MessageSelectOptionData } from 'discord.js'
 import { MessageSelectMenu } from 'discord.js'
-import type { JSXString } from '../utils'
-import { arrayify, normalize } from '../utils'
-import { ActionRow } from './rows'
+import type { JSXString } from '../utils.js'
+import { arrayify, normalize } from '../utils.js'
+import { ActionRow } from './rows.js'
 
 export interface SelectMenuProps {
   customId: string
