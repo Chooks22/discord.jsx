@@ -12,7 +12,12 @@
     "jsxImportSource": "@chooks22/discord.jsx",
     "lib": [
       "ESNext"
-    ]
+    ],
+    "paths": {
+      "@chooks22/discord.jsx/jsx-runtime": [
+        "./src/jsx-runtime.ts"
+      ]
+    }
   },
   "include": [
     "src",
