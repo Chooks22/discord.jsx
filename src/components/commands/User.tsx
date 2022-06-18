@@ -1,5 +1,5 @@
 import type { UserContextMenuInteraction } from 'discord.js'
-import { CommandType, permissionify } from '../utils.js'
+import { CommandType, permissionify } from '../../_utils.js'
 import type { BaseCommand, CommandContainer, WithExecute } from './_utils.js'
 import { validateBaseCommand, validateExecute } from './_utils.js'
 

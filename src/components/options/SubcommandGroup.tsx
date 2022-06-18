@@ -1,7 +1,7 @@
-import { arrayify, OptionType } from '../../utils.js'
-import type { WithOptions } from '../_utils.js'
-import { validateOptions } from '../_utils.js'
-import type { Subcommand } from './subcommand.js'
+import { arrayify, OptionType } from '../../_utils.js'
+import type { WithOptions } from '../commands/_utils.js'
+import { validateOptions } from '../commands/_utils.js'
+import type { Subcommand } from './Subcommand.js'
 import type { BaseOption, OptionContainer } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
 

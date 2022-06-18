@@ -1,6 +1,6 @@
 import type { MessageActionRowComponentResolvable } from 'discord.js'
 import { MessageActionRow } from 'discord.js'
-import { arrayify } from '../utils.js'
+import { arrayify } from '../../_utils.js'
 
 export interface ActionRowProps {
   children: JSX.Element | JSX.Element[]

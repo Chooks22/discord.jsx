@@ -1,21 +1,21 @@
-import { OptionType } from '../../utils.js'
+import { OptionType } from '../../_utils.js'
 import type { BaseOption, OptionContainer } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
 
-export interface UserOptionProps extends BaseOption {
+export interface BooleanOptionProps extends BaseOption {
 }
 
-export interface UserOption extends UserOptionProps {
-  type: OptionType.User
+export interface BooleanOption extends BooleanOptionProps {
+  type: OptionType.Boolean
 }
 
-function validate(option: UserOption) {
-  validateBaseOption('user option', option)
+function validate(option: BooleanOption) {
+  validateBaseOption('boolean option', option)
   return option
 }
 
-export function UserOption(option: UserOptionProps): OptionContainer<UserOption> {
-  const _option = { ...option, type: OptionType.User as const }
+export function BooleanOption(option: BooleanOptionProps): OptionContainer<BooleanOption> {
+  const _option = { ...option, type: OptionType.Boolean as const }
   const data = validate(_option)
   return {
     data,

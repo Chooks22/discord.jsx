@@ -1,15 +1,15 @@
 import type { Client, Interaction } from 'discord.js'
-import type { InteractionHandler } from '../utils.js'
-import { arrayify, CommandType } from '../utils.js'
+import type { InteractionHandler } from '../../_utils.js'
+import { arrayify, CommandType } from '../../_utils.js'
 import type { Command } from './types.js'
 import type { CommandContainer } from './_utils.js'
 
+export * from './Choice.js'
+export * from './Command.js'
+export * from './Message.js'
+export * from './Subcommand.js'
 export * from './types.js'
-export * from './message.js'
-export * from './options/index.js'
-export * from './slash-sub.js'
-export * from './slash.js'
-export * from './user.js'
+export * from './User.js'
 
 function createKey(ns: string, name: string, ...children: (string | null)[]) {
   let key = `${ns}::${name}`

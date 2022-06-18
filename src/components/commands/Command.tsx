@@ -1,7 +1,7 @@
 import type { CommandInteraction } from 'discord.js'
-import { arrayify, CommandType, permissionify } from '../utils.js'
-import type { BasicOption } from './options/types.js'
-import type { OptionContainer } from './options/_utils.js'
+import { arrayify, CommandType, permissionify } from '../../_utils.js'
+import type { BasicOption } from '../options/types.js'
+import type { OptionContainer } from '../options/_utils.js'
 import type { BaseCommand, CommandContainer, WithDescription, WithExecute } from './_utils.js'
 import { validateBaseCommand, validateDescription, validateExecute } from './_utils.js'
 

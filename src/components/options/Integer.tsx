@@ -1,19 +1,19 @@
-import { arrayify, OptionType } from '../../utils.js'
-import { validateNumber } from '../_utils.js'
+import { arrayify, OptionType } from '../../_utils.js'
+import { validateNumber } from '../commands/_utils.js'
 import type { BaseOption, OptionContainer, WithAutocomplete } from './_utils.js'
 import { validateAutocomplete, validateBaseOption } from './_utils.js'
 
-export interface NumberOptionProps extends BaseOption, WithAutocomplete {
+export interface IntegerOptionProps extends BaseOption, WithAutocomplete {
   minValue?: number
   maxValue?: number
 }
 
-export interface NumberOption extends NumberOptionProps {
-  type: OptionType.Number
+export interface IntegerOption extends IntegerOptionProps {
+  type: OptionType.Integer
 }
 
-function validate(option: NumberOption) {
-  const prefix = 'number option'
+function validate(option: IntegerOption) {
+  const prefix = 'integer option'
   validateBaseOption(prefix, option)
   validateAutocomplete(prefix, option)
 
@@ -27,8 +27,8 @@ function validate(option: NumberOption) {
   return option
 }
 
-export function NumberOption(option: NumberOptionProps): OptionContainer<NumberOption> {
-  const _option = { ...option, type: OptionType.Number as const }
+export function IntegerOption(option: IntegerOptionProps): OptionContainer<IntegerOption> {
+  const _option = { ...option, type: OptionType.Integer as const }
   if (option.choices !== undefined) {
     _option.choices = arrayify(option.choices)
   }
@@ -44,7 +44,7 @@ export function NumberOption(option: NumberOptionProps): OptionContainer<NumberO
       autocomplete: typeof data.autocomplete === 'function',
       min_value: data.minValue,
       max_value: data.maxValue,
-      required: true,
+      required: data.required,
     }),
   }
 }

@@ -1,7 +1,7 @@
 import type { LocalizationMap, RESTPostAPIChatInputApplicationCommandsJSONBody as ChatInput } from 'discord-api-types/v10'
 import type { Interaction, PermissionResolvable } from 'discord.js'
 import { Permissions } from 'discord.js'
-import type { CommandType, InteractionHandler } from '../utils.js'
+import type { CommandType, InteractionHandler } from '../../_utils.js'
 
 export interface WithName {
   name: string

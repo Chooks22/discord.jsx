@@ -1,6 +1,6 @@
 import type { ClientEvents, ClientOptions as DJSClientOptions } from 'discord.js'
 import { Client as DJSClient } from 'discord.js'
-import type { Listener } from './utils.js'
+import type { Listener } from '../_utils.js'
 
 type ToListenerEventName<T> = T extends `${infer U}${infer Rest}`
   ? `on${Uppercase<U>}${Rest}` | `once${Uppercase<U>}${Rest}`

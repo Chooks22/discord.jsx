@@ -1,8 +1,8 @@
 import type { MessageActionRow, TextInputStyle } from 'discord.js'
 import { Modal as _Modal, TextInputComponent } from 'discord.js'
-import type { JSXString } from '../utils.js'
-import { arrayify, normalize } from '../utils.js'
-import { ActionRow } from './rows.js'
+import type { JSXString } from '../../_utils.js'
+import { arrayify, normalize } from '../../_utils.js'
+import { ActionRow } from './Row.js'
 
 export interface ModalProps {
   customId: string

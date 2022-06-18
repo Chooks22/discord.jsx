@@ -1,4 +1,4 @@
-import { OptionType } from '../../utils.js'
+import { OptionType } from '../../_utils.js'
 import type { BaseOption, OptionContainer, WithAutocomplete } from './_utils.js'
 import { validateAutocomplete, validateBaseOption } from './_utils.js'
 

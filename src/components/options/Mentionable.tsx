@@ -1,4 +1,4 @@
-import { OptionType } from '../../utils.js'
+import { OptionType } from '../../_utils.js'
 import type { BaseOption, OptionContainer } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
 

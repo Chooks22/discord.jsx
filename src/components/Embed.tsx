@@ -1,7 +1,7 @@
 import type { ColorResolvable, EmbedFieldData, MessageEmbedOptions } from 'discord.js'
 import { MessageEmbed } from 'discord.js'
-import type { JSXString } from '../utils.js'
-import { arrayify, normalize } from '../utils.js'
+import type { JSXString } from '../_utils.js'
+import { arrayify, normalize } from '../_utils.js'
 
 export interface EmbedProps {
   color?: ColorResolvable

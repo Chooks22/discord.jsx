@@ -4,9 +4,9 @@ import type {
   APIApplicationCommandOptionChoice as Choice,
 } from 'discord-api-types/v10'
 import type { AutocompleteInteraction } from 'discord.js'
-import type { InteractionHandler } from '../../utils.js'
-import type { Container, WithDescription, WithName } from '../_utils.js'
-import { invalid, validateDescription, validateName } from '../_utils.js'
+import type { InteractionHandler } from '../../_utils.js'
+import type { Container, WithDescription, WithName } from '../commands/_utils.js'
+import { invalid, validateDescription, validateName } from '../commands/_utils.js'
 
 export interface WithAutocomplete {
   autocomplete?: InteractionHandler<AutocompleteInteraction>

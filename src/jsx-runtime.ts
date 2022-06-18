@@ -1,4 +1,4 @@
-import { arrayify } from './utils.js'
+import { arrayify } from './_utils.js'
 
 function jsx<T>(ctor: (props: T) => unknown, props: T): unknown {
   return ctor(props)

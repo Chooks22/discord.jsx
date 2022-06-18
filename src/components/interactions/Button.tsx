@@ -1,7 +1,7 @@
 import type { EmojiIdentifierResolvable, MessageButtonOptions } from 'discord.js'
 import { MessageButton } from 'discord.js'
-import type { JSXString } from '../utils.js'
-import { normalize } from '../utils.js'
+import type { JSXString } from '../../_utils.js'
+import { normalize } from '../../_utils.js'
 
 export interface ButtonProps {
   customId: string

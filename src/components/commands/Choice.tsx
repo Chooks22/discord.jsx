@@ -2,7 +2,7 @@ import type {
   APIApplicationCommandOptionChoice as Choice,
   LocalizationMap,
 } from 'discord-api-types/v10'
-import { validateString } from '../_utils.js'
+import { validateString } from './_utils.js'
 
 function validate(choice: ChoiceProps): ChoiceProps | never {
   validateString('choice name', choice.name, 1, 100)
@@ -26,7 +26,6 @@ export interface ChoiceProps<T extends string | number = string | number> {
   value: T
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function Choice(choice: ChoiceProps) {
+export function Choice(choice: ChoiceProps): Choice {
   return serializeChoice(validate(choice))
 }

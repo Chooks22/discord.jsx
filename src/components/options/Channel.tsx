@@ -1,5 +1,5 @@
-import { arrayify, OptionType } from '../../utils.js'
-import { invalid } from '../_utils.js'
+import { arrayify, OptionType } from '../../_utils.js'
+import { invalid } from '../commands/_utils.js'
 import type { BaseOption, OptionContainer } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
 
