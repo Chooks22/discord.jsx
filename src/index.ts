@@ -4,6 +4,8 @@ import type { RESTPostAPIChatInputApplicationCommandsJSONBody as ChatInput } fro
 import type { Client } from 'discord.js'
 import fetch from 'node-fetch'
 
+export type { JSXString } from './utils.js'
+
 export * from './client.js'
 export * from './commands/index.js'
 export * from './components/index.js'
