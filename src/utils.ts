@@ -4,6 +4,8 @@ import { Permissions } from 'discord.js'
 export type Listener<T extends unknown[] = unknown[]> = (...args: T) => Awaitable<void>
 export type InteractionHandler<T extends Interaction = Interaction> = Listener<[interaction: T]>
 
+export type JSXString = string | number | boolean | (string | number | boolean | undefined | null)[]
+
 export const enum CommandType {
   ChatInput = 1,
   User = 2,
@@ -37,4 +39,12 @@ export function permissionify(value: PermissionResolvable | undefined): undefine
     return undefined
   }
   return Permissions.resolve(value).toString()
+}
+
+export function normalize(content: JSXString): string {
+  return Array.isArray(content)
+    ? content
+      .filter(v => v !== undefined && v !== null && typeof v !== 'boolean')
+      .join('')
+    : content.toString()
 }

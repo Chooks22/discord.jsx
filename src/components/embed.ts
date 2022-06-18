@@ -1,16 +1,7 @@
 import type { ColorResolvable, EmbedFieldData, MessageEmbedOptions } from 'discord.js'
 import { MessageEmbed } from 'discord.js'
-import { arrayify } from '../utils.js'
-
-export type JSXString = string | number | boolean | (string | number | boolean | undefined | null)[]
-
-function normalize(content: JSXString): string {
-  return Array.isArray(content)
-    ? content
-      .filter(v => v !== undefined && v !== null && typeof v !== 'boolean')
-      .join('')
-    : content.toString()
-}
+import type { JSXString } from '../utils.js'
+import { arrayify, normalize } from '../utils.js'
 
 export interface EmbedProps {
   color?: ColorResolvable
