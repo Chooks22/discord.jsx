@@ -5,21 +5,14 @@
     "moduleResolution": "NodeNext",
     "skipLibCheck": true,
     "outDir": "dist",
+    "rootDir": ".",
     "strict": true,
     "declaration": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@chooks22/discord.jsx",
     "lib": [
       "ESNext"
-    ],
-    "paths": {
-      "discord.jsx": [
-        "./src/index.ts"
-      ],
-      "discord.jsx/jsx-runtime": [
-        "./src/jsx-runtime.ts"
-      ]
-    }
+    ]
   },
   "include": [
     "src",
