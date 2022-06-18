@@ -1,6 +1,6 @@
 {
   "name": "@chooks22/discord.jsx",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Unofficial Library for using Discord.JS with JSX Syntax",
   "license": "MIT",
   "type": "module",
@@ -11,7 +11,7 @@
   "packageManager": "yarn@3.2.1",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --incremental -w",
+    "dev": "tsc --incremental -w --tsBuildInfoFile dist/.tsbuildinfo",
     "lint": "eslint src --fix"
   },
   "exports": {
