@@ -40,7 +40,7 @@ function serialize(option: Omit<NumberOption, 'type'>): APIOption {
     autocomplete: typeof option.autocomplete === 'function',
     min_value: option.minValue,
     max_value: option.maxValue,
-    required: true,
+    required: option.required,
   }
 }
 
