@@ -1,31 +1,21 @@
-import type { APIEmbed } from 'discord-api-types/v10'
 import type {
   Awaitable,
-  BaseMessageComponentOptions,
-  BufferResolvable,
-  FileOptions,
   InteractionReplyOptions,
   Message,
   MessageActionRow,
-  MessageActionRowOptions,
   MessageAttachment,
   MessageEmbed,
-  MessageEmbedOptions,
 } from 'discord.js'
 import type { Stream } from 'node:stream'
-import type { JSXString, OnError } from '../../../_utils.js'
+import type { JSXString, MaybeArray, OnError } from '../../../_utils.js'
 import { arrayify, normalize } from '../../../_utils.js'
 import type { CustomPayload } from './_hander.js'
 import { CustomResponse } from './_hander.js'
 
 export interface ReplyProps extends Omit<InteractionReplyOptions, 'content' | 'embeds' | 'components' | 'attachments' | 'files'> {
-  embeds?: (MessageEmbed | MessageEmbedOptions | APIEmbed)[] | JSX.Element
-  components?: (MessageActionRow | (Required<BaseMessageComponentOptions> & MessageActionRowOptions))[] | JSX.Element
-  attachments?: MessageAttachment[] | JSX.Element
-  files?: (FileOptions | BufferResolvable | Stream | MessageAttachment)[] | JSX.Element
-  onFetchReply?: (message: Message) => Awaitable<unknown>
   onError?: OnError
-  children?: JSXString
+  onFetchReply?: (message: Message) => Awaitable<unknown>
+  children?: JSXString | MaybeArray<JSX.Element>
 }
 
 export function Reply(props: ReplyProps): CustomPayload {
@@ -33,29 +23,65 @@ export function Reply(props: ReplyProps): CustomPayload {
     $$type: CustomResponse,
     onError: props.onError,
     handle: async interaction => {
-      const { children, embeds, components, attachments, onFetchReply, files, ...payload } = props
+      const { children, onFetchReply, ...payload } = props
       const fetchReply = typeof onFetchReply === 'function'
 
       const opts: InteractionReplyOptions = {
         ...payload,
         fetchReply,
-        embeds: embeds && arrayify(embeds),
-        attachments: attachments && arrayify(attachments as MessageAttachment),
-        components: components && arrayify(components as MessageActionRow),
-        files: files && arrayify(files as FileOptions),
-        content: children !== undefined
-          ? normalize(children)
-          : children,
+      }
+
+      if (children !== undefined) {
+        const options = arrayify(children as JSX.Element)
+        const childOpts = options.filter(opt => opt !== null && typeof opt === 'object')
+
+        if (childOpts.length > 0) {
+          Object.assign(opts, ...childOpts)
+        } else {
+          opts.content = normalize(options as JSXString)
+        }
       }
 
       if (interaction.deferred) {
         await interaction.editReply(opts)
       } else {
-        const reply = await interaction.reply(opts as InteractionReplyOptions & { fetchReply: true })
+        const reply = await interaction.reply(opts)
         if (fetchReply) {
-          await onFetchReply(reply as Message)
+          await onFetchReply(reply as unknown as Message)
         }
       }
     },
   }
+}
+
+export interface ReplyEmbedProps {
+  children: MaybeArray<MessageEmbed | JSX.Element>
+}
+
+Reply.Embeds = function Embeds(props: ReplyEmbedProps): Pick<InteractionReplyOptions, 'embeds'> {
+  return { embeds: arrayify(props.children) }
+}
+
+export interface ReplyAttachmentProps {
+  children: MaybeArray<MessageAttachment | Stream | JSX.Element>
+}
+
+Reply.Attachments = function Attachments(props: ReplyAttachmentProps): Pick<InteractionReplyOptions, 'attachments'> {
+  return { attachments: arrayify(props.children as MessageAttachment) }
+}
+
+export interface ReplyComponentProps {
+  children: MaybeArray<MessageActionRow | JSX.Element>
+}
+
+Reply.Components = function Components(props: ReplyComponentProps): Pick<InteractionReplyOptions, 'components'> {
+  return { components: arrayify(props.children as MessageActionRow) }
+}
+
+export interface ReplyContentProps {
+  children: JSXString
+}
+
+Reply.Content = function Content(props: ReplyContentProps): Pick<InteractionReplyOptions, 'content'> {
+  return { content: normalize(props.children) }
 }

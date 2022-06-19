@@ -1,6 +1,8 @@
 import type { Awaitable, Interaction, PermissionResolvable } from 'discord.js'
 import { Permissions } from 'discord.js'
 
+export type MaybeArray<T> = T | T[]
+
 export type Listener<T extends unknown[] = unknown[]> = (...args: T) => Awaitable<unknown>
 export type InteractionHandler<T extends Interaction = Interaction> = Listener<[interaction: T]>
 
