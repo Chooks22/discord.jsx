@@ -1,5 +1,6 @@
 import { OptionType } from '../../_utils.js'
-import type { BaseOption, OptionContainer } from './_utils.js'
+import type { OptionContainer } from '../_utils.js'
+import type { BaseOption } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
 
 export interface MentionableOptionProps extends BaseOption {
@@ -9,23 +10,28 @@ export interface MentionableOption extends MentionableOptionProps {
   type: OptionType.Mentionable
 }
 
-function validate(option: MentionableOption) {
+function validate(option: Omit<MentionableOption, 'type'>) {
   validateBaseOption('mentionable option', option)
   return option
 }
 
-export function MentionableOption(option: MentionableOptionProps): OptionContainer<MentionableOption> {
-  const _option = { ...option, type: OptionType.Mentionable as const }
-  const data = validate(_option)
+function serialize(option: Omit<MentionableOption, 'type'>) {
   return {
-    data,
-    toJSON: () => ({
-      type: data.type as number,
-      name: data.name,
-      name_localizations: data.nameLocalizations,
-      description: data.description,
-      description_localizations: data.descriptionLocalizations,
-      required: data.required,
-    }),
+    type: OptionType.Mentionable as number,
+    name: option.name,
+    name_localizations: option.nameLocalizations,
+    description: option.description,
+    description_localizations: option.descriptionLocalizations,
+    required: option.required,
+  }
+}
+
+export function MentionableOption(option: MentionableOptionProps): OptionContainer<'Option'> {
+  const data = validate(option)
+  return {
+    *getExecute() {
+      // no execute
+    },
+    toJSON: () => serialize(data),
   }
 }

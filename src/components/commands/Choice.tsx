@@ -1,7 +1,5 @@
-import type {
-  APIApplicationCommandOptionChoice as Choice,
-  LocalizationMap,
-} from 'discord-api-types/v10'
+import type { LocalizationMap } from 'discord-api-types/v10'
+import type { APIChoice } from '../../_utils.js'
 import { validateString } from './_utils.js'
 
 function validate(choice: ChoiceProps): ChoiceProps | never {
@@ -12,7 +10,7 @@ function validate(choice: ChoiceProps): ChoiceProps | never {
   return choice
 }
 
-function serializeChoice(choice: ChoiceProps): Choice {
+function serialize(choice: ChoiceProps): APIChoice {
   return {
     name: choice.name,
     name_localizations: choice.localization,
@@ -26,6 +24,6 @@ export interface ChoiceProps<T extends string | number = string | number> {
   value: T
 }
 
-export function Choice(choice: ChoiceProps): Choice {
-  return serializeChoice(validate(choice))
+export function Choice(choice: ChoiceProps): APIChoice {
+  return serialize(validate(choice))
 }

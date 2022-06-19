@@ -1,5 +1,7 @@
+import type { APIOption } from '../../_utils.js'
 import { OptionType } from '../../_utils.js'
-import type { BaseOption, OptionContainer } from './_utils.js'
+import type { OptionContainer } from '../_utils.js'
+import type { BaseOption } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
 
 export interface RoleOptionProps extends BaseOption {
@@ -9,23 +11,28 @@ export interface RoleOption extends RoleOptionProps {
   type: OptionType.Role
 }
 
-function validate(option: RoleOption) {
+function validate(option: Omit<RoleOption, 'type'>) {
   validateBaseOption('role option', option)
   return option
 }
 
-export function RoleOption(option: RoleOptionProps): OptionContainer<RoleOption> {
-  const _option = { ...option, type: OptionType.Role as const }
-  const data = validate(_option)
+function serialize(option: Omit<RoleOption, 'type'>): APIOption {
   return {
-    data,
-    toJSON: () => ({
-      type: data.type as number,
-      name: data.name,
-      name_localizations: data.nameLocalizations,
-      description: data.description,
-      description_localizations: data.descriptionLocalizations,
-      required: data.required,
-    }),
+    type: OptionType.Role as number,
+    name: option.name,
+    name_localizations: option.nameLocalizations,
+    description: option.description,
+    description_localizations: option.descriptionLocalizations,
+    required: option.required,
+  }
+}
+
+export function RoleOption(option: RoleOptionProps): OptionContainer<'Option'> {
+  const data = validate(option)
+  return {
+    *getExecute() {
+      // no execute
+    },
+    toJSON: () => serialize(data),
   }
 }

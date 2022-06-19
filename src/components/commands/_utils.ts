@@ -1,4 +1,4 @@
-import type { LocalizationMap, RESTPostAPIChatInputApplicationCommandsJSONBody as ChatInput } from 'discord-api-types/v10'
+import type { LocalizationMap } from 'discord-api-types/v10'
 import type { Interaction, PermissionResolvable } from 'discord.js'
 import { Permissions } from 'discord.js'
 import type { CommandType, InteractionHandler } from '../../_utils.js'
@@ -25,13 +25,6 @@ export interface BaseCommand extends WithName {
 export interface BaseCommandWithType extends BaseCommand {
   type: CommandType
 }
-
-export interface Container<T, U> {
-  data: T
-  toJSON: () => U
-}
-
-export type CommandContainer<T extends BaseCommandWithType> = Container<T, ChatInput>
 
 export interface WithOptions<T> {
   options: T[]

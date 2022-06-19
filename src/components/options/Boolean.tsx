@@ -1,5 +1,7 @@
+import type { APIOption } from '../../_utils.js'
 import { OptionType } from '../../_utils.js'
-import type { BaseOption, OptionContainer } from './_utils.js'
+import type { OptionContainer } from '../_utils.js'
+import type { BaseOption } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
 
 export interface BooleanOptionProps extends BaseOption {
@@ -9,23 +11,28 @@ export interface BooleanOption extends BooleanOptionProps {
   type: OptionType.Boolean
 }
 
-function validate(option: BooleanOption) {
+function validate(option: Omit<BooleanOption, 'type'>) {
   validateBaseOption('boolean option', option)
   return option
 }
 
-export function BooleanOption(option: BooleanOptionProps): OptionContainer<BooleanOption> {
-  const _option = { ...option, type: OptionType.Boolean as const }
-  const data = validate(_option)
+function serialize(option: Omit<BooleanOption, 'type'>): APIOption {
   return {
-    data,
-    toJSON: () => ({
-      type: data.type as number,
-      name: data.name,
-      name_localizations: data.nameLocalizations,
-      description: data.description,
-      description_localizations: data.descriptionLocalizations,
-      required: data.required,
-    }),
+    type: OptionType.Boolean as number,
+    name: option.name,
+    name_localizations: option.nameLocalizations,
+    description: option.description,
+    description_localizations: option.descriptionLocalizations,
+    required: option.required,
+  }
+}
+
+export function BooleanOption(option: BooleanOptionProps): OptionContainer<'Option'> {
+  const data = validate(option)
+  return {
+    *getExecute() {
+      // no execute
+    },
+    toJSON: () => serialize(data),
   }
 }

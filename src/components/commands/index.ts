@@ -1,9 +1,8 @@
 import type { Client, Interaction } from 'discord.js'
 import type { InteractionHandler } from '../../_utils.js'
-import { arrayify, CommandType } from '../../_utils.js'
+import { arrayify } from '../../_utils.js'
+import type { CommandContainer } from '../_utils.js'
 import { isCustomResponse } from './responses/_handler.js'
-import type { Command } from './types.js'
-import type { CommandContainer } from './_utils.js'
 
 export * from './Choice.js'
 export * from './Command.js'
@@ -23,39 +22,10 @@ function createKey(ns: string, name: string, ...children: (string | null)[]) {
   return key
 }
 
-const typeToNamespace = {
-  [CommandType.ChatInput]: 'cmd',
-  [CommandType.User]: 'usr',
-  [CommandType.Message]: 'msg',
-}
-
 class CommandStore {
   private store = new Map<string, InteractionHandler>()
-  public set(command: Command): this {
-    const ns = typeToNamespace[command.type]
-
-    if ('onExecute' in command) {
-      const key = createKey(ns, command.name)
-      this.store.set(key, command.onExecute as InteractionHandler)
-      return this
-    }
-
-    if (Array.isArray(command.options)) {
-      for (const option of command.options) {
-        if ('onExecute' in option.data) {
-          const subcommand = option.data
-          const key = createKey(ns, command.name, subcommand.name)
-          this.store.set(key, subcommand.onExecute as InteractionHandler)
-        } else {
-          const group = option.data
-          for (const { data: subcommand } of group.options) {
-            const key = createKey(ns, command.name, group.name, subcommand.name)
-            this.store.set(key, subcommand.onExecute as InteractionHandler)
-          }
-        }
-      }
-    }
-
+  public set(key: string, value: InteractionHandler): this {
+    this.store.set(key, value)
     return this
   }
   public get(interaction: Interaction): InteractionHandler | null {
@@ -98,14 +68,8 @@ export interface CommandListProps {
   children: JSX.Element | JSX.Element[]
 }
 
-interface CommandList {
-  children: CommandContainer<Command>
-}
-
-// @ts-ignore users see jsx
-export function CommandList(commands: CommandListProps): JSX.Element
-export function CommandList(props: CommandList): JSX.Element {
-  const options = arrayify(props.children)
+export function CommandList(props: CommandListProps): JSX.Element {
+  const options = arrayify(props.children as CommandContainer)
 
   return (client?: Client): unknown => {
     if (client === undefined) {
@@ -114,7 +78,9 @@ export function CommandList(props: CommandList): JSX.Element {
 
     const commands = new CommandStore()
     for (const option of options) {
-      commands.set(option.data)
+      for (const [key, onExecute] of option.getExecute()) {
+        commands.set(key, onExecute)
+      }
     }
 
     client.on('interactionCreate', async interaction => {

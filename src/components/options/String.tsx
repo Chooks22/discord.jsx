@@ -1,5 +1,7 @@
-import { OptionType } from '../../_utils.js'
-import type { BaseOption, OptionContainer, WithAutocomplete } from './_utils.js'
+import type { APIOption, InteractionHandler } from '../../_utils.js'
+import { arrayify, OptionType } from '../../_utils.js'
+import type { OptionContainer } from '../_utils.js'
+import type { BaseOption, WithAutocomplete } from './_utils.js'
 import { validateAutocomplete, validateBaseOption } from './_utils.js'
 
 export interface StringOptionProps extends BaseOption, WithAutocomplete {
@@ -9,29 +11,37 @@ export interface StringOption extends StringOptionProps {
   type: OptionType.String
 }
 
-function validate(option: StringOption) {
+function validate(option: Omit<StringOption, 'type'>) {
   const prefix = 'string option'
   validateBaseOption(prefix, option)
   validateAutocomplete(prefix, option)
   return option
 }
 
-export function StringOption(option: StringOptionProps): OptionContainer<StringOption> {
-  const _option = { ...option, type: OptionType.String as const }
-  if (option.choices !== undefined) {
-    _option.choices = [option.choices].flat()
-  }
-  const data = validate(_option)
+function serialize(data: Omit<StringOption, 'type'>): APIOption {
   return {
-    data,
-    toJSON: () => ({
-      type: data.type as number,
-      name: data.name,
-      name_localizations: data.nameLocalizations,
-      description: data.description,
-      description_localizations: data.descriptionLocalizations,
-      autocomplete: typeof data.autocomplete === 'function',
-      required: data.required,
-    }),
+    type: OptionType.String as number,
+    name: data.name,
+    name_localizations: data.nameLocalizations,
+    description: data.description,
+    description_localizations: data.descriptionLocalizations,
+    autocomplete: typeof data.autocomplete === 'function',
+    required: data.required,
+  }
+}
+
+export function StringOption(option: StringOptionProps): OptionContainer<'Option'> {
+  const data = validate({
+    ...option,
+    choices: option.choices && arrayify(option.choices),
+  })
+
+  return {
+    *getExecute(ns, parentKey) {
+      if (data.autocomplete !== undefined) {
+        yield [`auto::${parentKey}:${data.name}`, data.autocomplete as InteractionHandler]
+      }
+    },
+    toJSON: () => serialize(data),
   }
 }

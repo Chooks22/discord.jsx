@@ -1,6 +1,8 @@
+import type { APIOption } from '../../_utils.js'
 import { arrayify, OptionType } from '../../_utils.js'
 import { invalid } from '../commands/_utils.js'
-import type { BaseOption, OptionContainer } from './_utils.js'
+import type { OptionContainer } from '../_utils.js'
+import type { BaseOption } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
 
 export interface ChannelOptionProps extends BaseOption {
@@ -11,7 +13,7 @@ export interface ChannelOption extends ChannelOptionProps {
   type: OptionType.Channel
 }
 
-function validate(option: ChannelOption) {
+function validate(option: Omit<ChannelOption, 'type'>) {
   validateBaseOption('channel option', option)
 
   if (option.channelTypes !== undefined) {
@@ -28,22 +30,28 @@ function validate(option: ChannelOption) {
   return option
 }
 
-export function ChannelOption(option: ChannelOptionProps): OptionContainer<ChannelOption> {
-  const _option = { ...option, type: OptionType.Channel as const }
-  if (option.channelTypes !== undefined) {
-    _option.channelTypes = arrayify(option.channelTypes)
-  }
-  const data = validate(_option)
+function serialize(option: Omit<ChannelOption, 'type'>): APIOption {
   return {
-    data,
-    toJSON: () => ({
-      type: data.type as number,
-      name: data.name,
-      name_localizations: data.nameLocalizations,
-      description: data.description,
-      description_localizations: data.descriptionLocalizations,
-      channel_types: data.channelTypes,
-      required: data.required,
-    }),
+    type: OptionType.Channel as number,
+    name: option.name,
+    name_localizations: option.nameLocalizations,
+    description: option.description,
+    description_localizations: option.descriptionLocalizations,
+    channel_types: option.channelTypes,
+    required: option.required,
+  }
+}
+
+export function ChannelOption(option: ChannelOptionProps): OptionContainer<'Option'> {
+  const data = validate({
+    ...option,
+    channelTypes: option.channelTypes && arrayify(option.channelTypes),
+  })
+
+  return {
+    *getExecute() {
+      // no execute
+    },
+    toJSON: () => serialize(data),
   }
 }

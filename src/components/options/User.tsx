@@ -1,5 +1,7 @@
+import type { APIOption } from '../../_utils.js'
 import { OptionType } from '../../_utils.js'
-import type { BaseOption, OptionContainer } from './_utils.js'
+import type { OptionContainer } from '../_utils.js'
+import type { BaseOption } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
 
 export interface UserOptionProps extends BaseOption {
@@ -9,23 +11,28 @@ export interface UserOption extends UserOptionProps {
   type: OptionType.User
 }
 
-function validate(option: UserOption) {
+function validate(option: Omit<UserOption, 'type'>) {
   validateBaseOption('user option', option)
   return option
 }
 
-export function UserOption(option: UserOptionProps): OptionContainer<UserOption> {
-  const _option = { ...option, type: OptionType.User as const }
-  const data = validate(_option)
+function serialize(option: Omit<UserOption, 'type'>): APIOption {
   return {
-    data,
-    toJSON: () => ({
-      type: data.type as number,
-      name: data.name,
-      name_localizations: data.nameLocalizations,
-      description: data.description,
-      description_localizations: data.descriptionLocalizations,
-      required: data.required,
-    }),
+    type: OptionType.User as number,
+    name: option.name,
+    name_localizations: option.nameLocalizations,
+    description: option.description,
+    description_localizations: option.descriptionLocalizations,
+    required: option.required,
+  }
+}
+
+export function UserOption(option: UserOptionProps): OptionContainer<'Option'> {
+  const data = validate(option)
+  return {
+    *getExecute() {
+      // no execute
+    },
+    toJSON: () => serialize(data),
   }
 }

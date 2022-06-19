@@ -1,5 +1,7 @@
+import type { APIOption } from '../../_utils.js'
 import { OptionType } from '../../_utils.js'
-import type { BaseOption, OptionContainer } from './_utils.js'
+import type { OptionContainer } from '../_utils.js'
+import type { BaseOption } from './_utils.js'
 import { validateBaseOption } from './_utils.js'
 
 export interface AttachmentOptionProps extends BaseOption {
@@ -9,23 +11,28 @@ export interface AttachmentOption extends AttachmentOptionProps {
   type: OptionType.Attachment
 }
 
-function validate(option: AttachmentOption) {
+function validate(option: Omit<AttachmentOption, 'type'>) {
   validateBaseOption('attachment option', option)
   return option
 }
 
-export function AttachmentOption(option: AttachmentOptionProps): OptionContainer<AttachmentOption> {
-  const _option = { ...option, type: OptionType.Attachment as const }
-  const data = validate(_option)
+function serialize(option: Omit<AttachmentOption, 'type'>): APIOption {
   return {
-    data,
-    toJSON: () => ({
-      type: data.type as number,
-      name: data.name,
-      name_localizations: data.nameLocalizations,
-      description: data.description,
-      description_localizations: data.descriptionLocalizations,
-      required: data.required,
-    }),
+    type: OptionType.Attachment as number,
+    name: option.name,
+    name_localizations: option.nameLocalizations,
+    description: option.description,
+    description_localizations: option.descriptionLocalizations,
+    required: option.required,
+  }
+}
+
+export function AttachmentOption(props: AttachmentOptionProps): OptionContainer<'Option'> {
+  const data = validate(props)
+  return {
+    *getExecute() {
+      // no execute
+    },
+    toJSON: () => serialize(data),
   }
 }

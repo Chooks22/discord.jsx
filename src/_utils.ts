@@ -1,6 +1,13 @@
 import type { Awaitable, Interaction, PermissionResolvable } from 'discord.js'
 import { Permissions } from 'discord.js'
 
+export type {
+  APIApplicationCommandBasicOption as APIOption,
+  APIApplicationCommandOptionChoice as APIChoice,
+  APIApplicationCommandSubcommandOption as APICommandOption,
+  RESTPostAPIChatInputApplicationCommandsJSONBody as APICommand,
+} from 'discord-api-types/v10'
+
 export type MaybeArray<T> = T | T[]
 
 export type Listener<T extends unknown[] = unknown[]> = (...args: T) => Awaitable<unknown>
