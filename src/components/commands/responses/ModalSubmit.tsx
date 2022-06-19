@@ -1,7 +1,7 @@
 import type { AwaitModalSubmitOptions, Modal, ModalSubmitInteraction } from 'discord.js'
 import type { InteractionHandler, OnError } from '../../../_utils.js'
-import type { CustomPayload } from './_hander.js'
-import { CustomResponse } from './_hander.js'
+import type { CustomPayload } from './_handler.js'
+import { CustomResponse } from './_handler.js'
 
 export interface ShowModalProps extends Omit<AwaitModalSubmitOptions<ModalSubmitInteraction>, 'time'> {
   time?: number

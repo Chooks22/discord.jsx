@@ -1,7 +1,7 @@
 import type { Client, Interaction } from 'discord.js'
 import type { InteractionHandler } from '../../_utils.js'
 import { arrayify, CommandType } from '../../_utils.js'
-import { isCustomResponse } from './responses/_hander.js'
+import { isCustomResponse } from './responses/_handler.js'
 import type { Command } from './types.js'
 import type { CommandContainer } from './_utils.js'
 

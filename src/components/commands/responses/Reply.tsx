@@ -9,8 +9,8 @@ import type {
 import type { Stream } from 'node:stream'
 import type { JSXString, MaybeArray, OnError } from '../../../_utils.js'
 import { arrayify, normalize } from '../../../_utils.js'
-import type { CustomPayload } from './_hander.js'
-import { CustomResponse } from './_hander.js'
+import type { CustomPayload } from './_handler.js'
+import { CustomResponse } from './_handler.js'
 
 export interface ReplyProps extends Omit<InteractionReplyOptions, 'content' | 'embeds' | 'components' | 'attachments' | 'files'> {
   onError?: OnError
