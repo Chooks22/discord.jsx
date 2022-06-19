@@ -42,7 +42,7 @@ export function Client(opts: ClientOptions): DJSClient {
     }
 
     const [freq, event, listener] = getListenerType(key as keyof Listeners, opts as Listeners)
-    client[freq](event, listener)
+    client[freq](event, listener as () => void)
   }
 
   return client

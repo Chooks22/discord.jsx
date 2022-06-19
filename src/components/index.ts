@@ -1,3 +1,4 @@
+export * from './Attachment.js'
 export * from './Client.js'
 export * from './commands/index.js'
 export * from './Embed.js'

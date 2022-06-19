@@ -51,29 +51,37 @@ Define a slash command:
 
 ```jsx
 // commands.tsx
-import { CommandList, SlashCommand } from '@chooks22/discord.jsx'
+import { CommandList, Reply, SlashCommand } from '@chooks22/discord.jsx'
 
-export const commands = <CommandList>
-  <SlashCommand
+function PingCommand() {
+  return <SlashCommand
     name="ping"
     description="Replies with Pong!"
-    onExecute={async interaction => {
-      await interaction.reply('Pong!')
-    }}
+    onExecute={() => <Reply>Pong!</Reply>}
   />
-</CommandList>
+}
+
+function Commands() {
+  return (
+    <CommandList>
+      <PingCommand />
+    </CommandList>
+  )
+}
+
+export default Commands
 ```
 
 Register a slash command against the Discord API:
 
 ```jsx
 import { createApp } from '@chooks22/discord.jsx'
-import { commands } from './commands.js'
+import Commands from './commands.js'
 
 const app = createApp('token')
 
 console.log('Started refreshing application (/) commands.')
-await app.register(commands, GUILD_ID)
+await app.register(<Commands />, GUILD_ID)
 console.log('Successfully reloaded application (/) commands.')
 ```
 
@@ -82,14 +90,18 @@ Afterwards we can create a quite simple example bot:
 ```jsx
 import { Intents } from 'discord.js'
 import { createApp, Client } from '@chooks22/discord.jsx'
-import { commands } from './commands.js'
+import Commands from './commands.js'
+
+function App() {
+  return <Client
+    intents={[Intents.FLAGS.GUILDS]}
+    onReady={client => {
+      console.log(`Logged in as ${client.user.tag}!`)
+    }}
+    commands={<Commands />}
+  />
+}
 
 const app = createApp('token')
-await app.login(<Client
-  intents={[Intents.FLAGS.GUILDS]}
-  onReady={client => {
-    console.log(`Logged in as ${client.user.tag}!`)
-  }}
-  commands={commands}
-/>)
+await app.login(<App />)
 ```
