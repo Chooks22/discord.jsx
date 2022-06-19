@@ -1,26 +1,30 @@
-import type { LocalizationMap } from 'discord-api-types/v10'
 import type { APIChoice } from '../../_utils.js'
-import { validateString } from './_utils.js'
+import type { WithName } from './_utils.js'
+import { validateLocales, validateString } from './_utils.js'
 
 function validate(choice: ChoiceProps): ChoiceProps | never {
   validateString('choice name', choice.name, 1, 100)
+
+  if (choice.nameLocalizations !== undefined) {
+    validateLocales('choice', choice.nameLocalizations, (prefix, locale) => validateString(prefix, locale, 1, 100))
+  }
+
   if (typeof choice.value !== 'number') {
     validateString('choice value', choice.value, 1, 100)
   }
+
   return choice
 }
 
 function serialize(choice: ChoiceProps): APIChoice {
   return {
     name: choice.name,
-    name_localizations: choice.localization,
+    name_localizations: choice.nameLocalizations,
     value: choice.value,
   }
 }
 
-export interface ChoiceProps<T extends string | number = string | number> {
-  name: string
-  localization?: LocalizationMap
+export interface ChoiceProps<T extends string | number = string | number> extends WithName {
   value: T
 }
 
