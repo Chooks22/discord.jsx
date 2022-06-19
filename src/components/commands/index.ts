@@ -1,6 +1,7 @@
 import type { Client, Interaction } from 'discord.js'
 import type { InteractionHandler } from '../../_utils.js'
 import { arrayify, CommandType } from '../../_utils.js'
+import { isCustomResponse } from './responses/_hander.js'
 import type { Command } from './types.js'
 import type { CommandContainer } from './_utils.js'
 
@@ -122,7 +123,20 @@ export function CommandList(props: CommandList): JSX.Element {
       }
 
       try {
-        await handler(interaction)
+        const res = await handler(interaction)
+        if (!interaction.isApplicationCommand() || !isCustomResponse(res)) {
+          return
+        }
+
+        try {
+          await res.handle(interaction)
+        } catch (error) {
+          if (res.onError) {
+            await res.onError(error)
+          } else {
+            throw error
+          }
+        }
       } catch (error) {
         console.error(error)
         console.error('failed to run handler!')

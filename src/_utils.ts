@@ -1,9 +1,10 @@
 import type { Awaitable, Interaction, PermissionResolvable } from 'discord.js'
 import { Permissions } from 'discord.js'
 
-export type Listener<T extends unknown[] = unknown[]> = (...args: T) => Awaitable<void>
+export type Listener<T extends unknown[] = unknown[]> = (...args: T) => Awaitable<unknown>
 export type InteractionHandler<T extends Interaction = Interaction> = Listener<[interaction: T]>
 
+export type OnError = (reason: unknown) => PromiseLike<never>
 export type JSXString = string | number | boolean | (string | number | boolean | undefined | null)[]
 
 export const enum CommandType {
