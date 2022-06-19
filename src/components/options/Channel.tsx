@@ -42,10 +42,10 @@ function serialize(option: Omit<ChannelOption, 'type'>): APIOption {
   }
 }
 
-export function ChannelOption(option: ChannelOptionProps): OptionContainer<'Option'> {
+export function ChannelOption(props: ChannelOptionProps): OptionContainer<'Option'> {
   const data = validate({
-    ...option,
-    channelTypes: option.channelTypes && arrayify(option.channelTypes),
+    ...props,
+    channelTypes: props.channelTypes && arrayify(props.channelTypes),
   })
 
   return {

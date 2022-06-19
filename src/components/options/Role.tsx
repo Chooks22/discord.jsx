@@ -27,8 +27,8 @@ function serialize(option: Omit<RoleOption, 'type'>): APIOption {
   }
 }
 
-export function RoleOption(option: RoleOptionProps): OptionContainer<'Option'> {
-  const data = validate(option)
+export function RoleOption(props: RoleOptionProps): OptionContainer<'Option'> {
+  const data = validate(props)
   return {
     *getExecute() {
       // no execute

@@ -1,4 +1,4 @@
-import type { ClientEvents, ClientOptions as DJSClientOptions } from 'discord.js'
+import type { ClientEvents, ClientOptions } from 'discord.js'
 import { Client as DJSClient } from 'discord.js'
 import type { Listener } from '../_utils.js'
 
@@ -13,7 +13,7 @@ type ToListener<T> = T extends Record<infer U, unknown[]>
 export interface Listeners extends ToListener<ClientEvents> {
 }
 
-export interface ClientOptions extends DJSClientOptions, Partial<Listeners> {
+export interface ClientProps extends ClientOptions, Partial<Listeners> {
   commands?: JSX.Element
 }
 
@@ -25,15 +25,15 @@ export function getListenerType(key: keyof Listeners, listeners: Listeners): ['o
   return ['on', key[2].toLowerCase() + key.slice(3), listener]
 }
 
-export function Client(opts: ClientOptions): DJSClient {
-  const client = new DJSClient(opts)
+export function Client(props: ClientProps): DJSClient {
+  const client = new DJSClient(props)
 
-  if (opts.commands) {
-    (opts.commands as (client: DJSClient) => void)(client)
+  if (props.commands) {
+    (props.commands as (client: DJSClient) => void)(client)
   }
 
-  for (const key in opts) {
-    if (!Object.hasOwn(opts, key)) {
+  for (const key in props) {
+    if (!Object.hasOwn(props, key)) {
       continue
     }
 
@@ -41,7 +41,7 @@ export function Client(opts: ClientOptions): DJSClient {
       continue
     }
 
-    const [freq, event, listener] = getListenerType(key as keyof Listeners, opts as Listeners)
+    const [freq, event, listener] = getListenerType(key as keyof Listeners, props as Listeners)
     client[freq](event, listener as () => void)
   }
 

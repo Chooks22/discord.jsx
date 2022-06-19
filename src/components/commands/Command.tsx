@@ -35,10 +35,10 @@ function serialize(data: Omit<SlashCommand, 'type'>): APICommand {
   }
 }
 
-export function SlashCommand(command: SlashCommandProps): CommandContainer {
+export function SlashCommand(props: SlashCommandProps): CommandContainer {
   const data = validate({
-    ...command,
-    options: command.options && arrayify(command.options as OptionContainer<'Option'>),
+    ...props,
+    options: props.options && arrayify(props.options as OptionContainer<'Option'>),
   })
 
   return {

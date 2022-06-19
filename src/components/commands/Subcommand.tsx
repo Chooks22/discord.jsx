@@ -32,17 +32,17 @@ function serialize(data: Omit<SlashSubcommand, 'type'>): APICommand {
   }
 }
 
-export function SlashSubcommand(command: SlashSubcommandProps): CommandContainer {
+export function SlashSubcommand(props: SlashSubcommandProps): CommandContainer {
   const data = validate({
-    ...command,
-    options: arrayify(command.children as OptionContainer<'Subcommand'>),
+    ...props,
+    options: arrayify(props.children as OptionContainer<'Subcommand'>),
   })
 
   return {
     *getExecute() {
       const ns = 'cmd'
       for (const group of data.options) {
-        yield* group.getExecute(ns, command.name)
+        yield* group.getExecute(ns, props.name)
       }
     },
     toJSON: () => serialize(data),

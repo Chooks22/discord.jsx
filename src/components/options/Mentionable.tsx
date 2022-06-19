@@ -26,8 +26,8 @@ function serialize(option: Omit<MentionableOption, 'type'>) {
   }
 }
 
-export function MentionableOption(option: MentionableOptionProps): OptionContainer<'Option'> {
-  const data = validate(option)
+export function MentionableOption(props: MentionableOptionProps): OptionContainer<'Option'> {
+  const data = validate(props)
   return {
     *getExecute() {
       // no execute

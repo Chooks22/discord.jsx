@@ -27,8 +27,8 @@ function serialize(option: Omit<BooleanOption, 'type'>): APIOption {
   }
 }
 
-export function BooleanOption(option: BooleanOptionProps): OptionContainer<'Option'> {
-  const data = validate(option)
+export function BooleanOption(props: BooleanOptionProps): OptionContainer<'Option'> {
+  const data = validate(props)
   return {
     *getExecute() {
       // no execute

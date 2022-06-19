@@ -30,11 +30,11 @@ function serialize(data: Omit<UserCommand, 'type'>): APICommand {
   }
 }
 
-export function UserCommand(command: UserCommandProps): CommandContainer {
-  const data = validate(command)
+export function UserCommand(props: UserCommandProps): CommandContainer {
+  const data = validate(props)
   return {
     *getExecute() {
-      yield [`usr::${command.name}`, command.onExecute as InteractionHandler]
+      yield [`usr::${props.name}`, props.onExecute as InteractionHandler]
     },
     toJSON: () => serialize(data),
   }

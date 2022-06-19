@@ -33,10 +33,10 @@ function serialize(data: Omit<SubcommandGroup, 'type'>): APICommandOption {
   }
 }
 
-export function SubcommandGroup(option: SubcommandGroupProps): OptionContainer<'Subcommand'> {
+export function SubcommandGroup(props: SubcommandGroupProps): OptionContainer<'Subcommand'> {
   const data = validate({
-    ...option,
-    options: arrayify(option.children as OptionContainer<'Option'>),
+    ...props,
+    options: arrayify(props.children as OptionContainer<'Option'>),
   })
 
   return {

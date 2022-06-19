@@ -28,6 +28,6 @@ export interface ChoiceProps<T extends string | number = string | number> extend
   value: T
 }
 
-export function Choice(choice: ChoiceProps): APIChoice {
-  return serialize(validate(choice))
+export function Choice(props: ChoiceProps): APIChoice {
+  return serialize(validate(props))
 }

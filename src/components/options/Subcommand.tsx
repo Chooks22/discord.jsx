@@ -39,10 +39,10 @@ function serialize(command: Omit<Subcommand, 'type'>): APICommandOption {
   }
 }
 
-export function Subcommand(command: SubcommandProps): OptionContainer<'Subcommand'> {
+export function Subcommand(props: SubcommandProps): OptionContainer<'Subcommand'> {
   const data = validate({
-    ...command,
-    options: command.children && arrayify(command.children as OptionContainer<'Option'>),
+    ...props,
+    options: props.children && arrayify(props.children as OptionContainer<'Option'>),
   })
 
   return {

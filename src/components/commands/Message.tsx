@@ -30,8 +30,8 @@ function serialize(data: Omit<MessageCommand, 'type'>): APICommand {
   }
 }
 
-export function MessageCommand(command: MessageCommandProps): CommandContainer {
-  const data = validate(command)
+export function MessageCommand(props: MessageCommandProps): CommandContainer {
+  const data = validate(props)
   return {
     *getExecute() {
       yield [`msg::${data.name}`, data.onExecute as InteractionHandler]

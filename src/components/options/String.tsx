@@ -30,10 +30,10 @@ function serialize(data: Omit<StringOption, 'type'>): APIOption {
   }
 }
 
-export function StringOption(option: StringOptionProps): OptionContainer<'Option'> {
+export function StringOption(props: StringOptionProps): OptionContainer<'Option'> {
   const data = validate({
-    ...option,
-    choices: option.choices && arrayify(option.choices),
+    ...props,
+    choices: props.choices && arrayify(props.choices),
   })
 
   return {
