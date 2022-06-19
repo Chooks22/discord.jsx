@@ -51,15 +51,13 @@ Define a slash command:
 
 ```jsx
 // commands.tsx
-import { CommandList, SlashCommand } from '@chooks22/discord.jsx'
+import { CommandList, Reply, SlashCommand } from '@chooks22/discord.jsx'
 
 export const commands = <CommandList>
   <SlashCommand
     name="ping"
     description="Replies with Pong!"
-    onExecute={async interaction => {
-      await interaction.reply('Pong!')
-    }}
+    onExecute={() => <Reply>Pong!</Reply>}
   />
 </CommandList>
 ```
